@@ -1,12 +1,13 @@
 import pygame
-
+from settings import *
 class Paddle:
-    def __init__(self, size=(20, 100), color=(200, 200, 200)):
+    def __init__(self, size=(50, 80), pos=(0, 0), color=(200, 200, 200), controll=FIRST_CONTROLL):
         self.display_surface = pygame.display.get_surface()
         self.display_w, self.display_h = self.display_surface.get_size()
+        self.controlls = controll
 
         self.width, self.height = size
-        self.x, self.y = 0, self.display_h // 2
+        self.x, self.y = pos
         self.color = color
 
         self.rect = pygame.rect.Rect(self.x, self.y, self.width, self.height)
@@ -15,9 +16,9 @@ class Paddle:
 
     def control(self):
         key = pygame.key.get_pressed()
-        if key[pygame.K_w]:
+        if key[self.controlls["up"]]:
             self.direction = -1
-        elif key[pygame.K_s]:
+        elif key[self.controlls["down"]]:
             self.direction = 1
         else:
             self.direction = 0
@@ -44,5 +45,8 @@ class AiPaddle(Paddle):
     def __init__(self, *args, **kargs):
         super().__init__(*args, **kargs)
         self.rect.x = self.display_w - self.width
+
+    def control(self):
+        pass
 
     

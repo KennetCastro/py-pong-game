@@ -2,13 +2,25 @@ import pygame
 import time, sys
 from paddle import Paddle, AiPaddle
 from ball import Ball
+from settings import *
 
 class Game:
-    def __init__(self):
+    def __init__(self, multiplayer=False):
         self.display_surface = pygame.display.get_surface()
-        
-        self.player_1 = Paddle()
-        self.player_2 = AiPaddle()
+        self.display_w, self.display_h = self.display_surface.get_size()
+
+        self.player_1 = Paddle(size=PADD_SIZE, pos=(0, self.display_h//2))
+        if multiplayer:
+            self.player_2 = Paddle(
+                size=PADD_SIZE,
+                pos=(self.display_w - PADD_SIZE[0], self.display_h//2),
+                controll=SECOND_CONTROLL
+            )
+        else:
+            self.player_2 = AiPaddle(
+                size=PADD_SIZE,
+                pos=(self.display_w - PADD_SIZE[0], self.display_h//2)
+            )
         self.ball = Ball()
 
         self.previus_time = time.time()
