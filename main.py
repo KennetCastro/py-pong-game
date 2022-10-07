@@ -12,6 +12,7 @@ class Pong:
 
         self.game = Game(multiplayer=True)
     
+
     def run(self):
         while True:
             self.game.run()
