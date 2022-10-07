@@ -23,6 +23,7 @@ class Game:
             )
         self.ball = Ball()
 
+        self.score = [0, 0]
         self.previus_time = time.time()
 
     def handle_events(self):
@@ -38,7 +39,7 @@ class Game:
     def update(self, dt):
         self.player_1.update(dt)
         self.player_2.update(dt)
-        self.ball.update(dt, self.player_1.rect, self.player_2.rect)
+        self.ball.update(dt, self.player_1.rect, self.player_2.rect, self.score)
 
     def render(self):
         self.display_surface.fill((30, 30, 55))
