@@ -12,9 +12,15 @@ class Pong:
 
         self.game = Game(multiplayer=True)
     
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
 
     def run(self):
         while True:
+            self.handle_events()
             self.game.run()
             self.clock.tick(FPS)
             pygame.display.update()

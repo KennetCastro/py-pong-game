@@ -11,7 +11,7 @@ class Paddle:
         self.color = color
 
         self.rect = pygame.rect.Rect(self.x, self.y, self.width, self.height)
-        self.speed = 275
+        self.speed = 375
         self.direction = 0
 
 

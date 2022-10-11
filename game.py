@@ -11,31 +11,27 @@ class Game:
         self.display_w, self.display_h = self.display_surface.get_size()
         self.theme = theme
 
-        self.score = [9, 9]
-        self.scoreboard = Board(f'{self.score[0]: >3} SCORE {self.score[1]: <3}')
-
-        self.player_1 = Paddle(size=PADD_SIZE, pos=(0, self.display_h//2))
+        self.player_1 = Paddle(size=PADD_SIZE, pos=(0, self.display_h//2), color=self.theme["obj"])
         if multiplayer:
             self.player_2 = Paddle(
                 size=PADD_SIZE,
                 pos=(self.display_w - PADD_SIZE[0], self.display_h//2),
+                color=self.theme["obj"],
                 controll=SECOND_CONTROLL
             )
         else:
             self.player_2 = AiPaddle(
                 size=PADD_SIZE,
-                pos=(self.display_w - PADD_SIZE[0], self.display_h//2)
+                pos=(self.display_w - PADD_SIZE[0], self.display_h//2),
+                color=self.theme["obj"]
             )
-        self.ball = Ball()
+        self.ball = Ball(color=self.theme["obj"])
         
+        self.score = [0, 0]
+        self.p1_score = Board(name="ARCADECLASSIC.ttf")
+        self.p2_score = Board(name="ARCADECLASSIC.ttf")
+
         self.previus_time = time.time()
-
-
-    def handle_events(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
 
 
     def get_deltatime(self):
@@ -50,15 +46,29 @@ class Game:
 
 
     def render(self):
+        # clean screen
         self.display_surface.fill(self.theme["bg"])
-        self.scoreboard.render(f'{self.score[0]: >3} SCORE {self.score[1]: <3}')
+
+        # show score
+        self.p1_score.render(f'{self.score[0]}', pos=(self.display_w//2 - 25, self.display_h//2))
+        self.p2_score.render(f'{self.score[1]}', pos=(self.display_w//2 + 25, self.display_h//2))
+        
+        # middle line
+        pygame.draw.line(
+            self.display_surface,
+            self.theme["obj"],
+            (self.display_w//2, 0),
+            (self.display_w//2, self.display_h),
+            2
+        )
+
+        # show player and ball
         self.player_1.render()
         self.player_2.render()
         self.ball.render()
 
 
     def run(self):
-        self.handle_events()
         self.get_deltatime()
         self.update(self.dt)
         self.render()

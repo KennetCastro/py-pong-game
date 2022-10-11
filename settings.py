@@ -12,6 +12,6 @@ FIRST_CONTROLL = {"up": pg_l.K_w, "down": pg_l.K_s}
 SECOND_CONTROLL = {"up": pg_l.K_UP, "down": pg_l.K_DOWN}
 
 # paddles
-PADD_SIZE = (20, 100)
+PADD_SIZE = (10, 110)
 POS_1 = 0
 POS_2 = SCREEN_W//2
