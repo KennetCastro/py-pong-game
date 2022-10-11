@@ -3,7 +3,7 @@ import time, sys
 from scoreboard import Board
 from settings import *
 
-class Menu():
+class Menu:
     def __init__(self, theme=DEFAULT_T):
         self.display_surface = pygame.display.get_surface()
         self.display_w, self.display_h = self.display_surface.get_size()
@@ -33,6 +33,10 @@ class Menu():
         else:
             self.theme["bg"] = (30, 30, 55)
 
+        if key[pygame.K_m]:
+            self.running = False
+            return 'multi'
+
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -42,7 +46,7 @@ class Menu():
 
 
     def update(self):
-        self.control()
+        pass
 
 
     def render(self):
@@ -53,8 +57,11 @@ class Menu():
     def run(self):
         while self.running:
             self.handle_events()
+            self.control()
             self.update()
             self.render()
             self.fps.render(f'{self.clock.get_fps():.0f}', pos=(20, 10))
             self.clock.tick(FPS)
             pygame.display.update()
+            return 
+        return 'multi'

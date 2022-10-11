@@ -11,10 +11,11 @@ class Ball:
         self.x, self.y = self.display_w // 2, self.display_h // 2
         self.color = color
 
-        self.rect = pygame.rect.Rect(self.x, self.y, self.size, self.size)
+        self.rect = pygame.rect.Rect(self.x - self.size//2, self.y - self.size//2, self.size, self.size)
         self.speed = 475
         self.direction = pygame.math.Vector2(random.choice([-1, 1]), random.randrange(-1, 0, 2))
         self.start = None
+        self.start_time = time.time()
 
 
     def reset(self):
@@ -22,7 +23,7 @@ class Ball:
         self.rect.center = self.x, self.y
 
         self.end = time.time()
-        if self.end - self.start > 3:
+        if self.end - self.start > 2:
             self.direction = pygame.math.Vector2(random.choice([-1, 1]), random.randrange(-1, 0, 2))
             self.start = None
         else:
@@ -65,13 +66,14 @@ class Ball:
     
 
     def update(self, dt, padd1, padd2, score):
-        self.x = self.direction.x * self.speed * dt
-        self.y = self.direction.y * self.speed * dt
-        self.rect.centerx += round(self.x)
-        self.rect.centery += round(self.y)
-        self.check_collision(padd1, padd2, score)
         if self.start:
             self.reset()
+        if time.time() - self.start_time > 3:
+            self.x = self.direction.x * self.speed * dt
+            self.y = self.direction.y * self.speed * dt
+            self.rect.centerx += round(self.x)
+            self.rect.centery += round(self.y)
+        self.check_collision(padd1, padd2, score)
 
 
     def render(self):
