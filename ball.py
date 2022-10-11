@@ -1,4 +1,5 @@
 import pygame
+import time
 import random
 
 class Ball:
@@ -13,12 +14,19 @@ class Ball:
         self.rect = pygame.rect.Rect(self.x, self.y, self.size, self.size)
         self.speed = 475
         self.direction = pygame.math.Vector2(random.choice([-1, 1]), random.randrange(-1, 0, 2))
+        self.start = None
 
 
     def reset(self):
         self.x, self.y = self.display_w // 2, self.display_h // 2
         self.rect.center = self.x, self.y
-        self.direction = pygame.math.Vector2(random.choice([-1, 1]), random.randrange(-1, 0, 2))
+
+        self.end = time.time()
+        if self.end - self.start > 3:
+            self.direction = pygame.math.Vector2(random.choice([-1, 1]), random.randrange(-1, 0, 2))
+            self.start = None
+        else:
+            self.direction.x, self.direction.y = 0, 0
 
 
     def check_collision(self, padd1, padd2, score):
@@ -31,11 +39,11 @@ class Ball:
         if self.rect.left <= -50:
             self.direction.x = 1
             score[1] += 1
-            self.reset()
+            self.start = time.time()
         elif self.rect.right >= self.display_w + 50:
             self.direction.x = -1
             score[0] += 1
-            self.reset()
+            self.start = time.time()
             
         # collision with the left paddle
         if self.rect.colliderect(padd1):
@@ -62,6 +70,8 @@ class Ball:
         self.rect.centerx += round(self.x)
         self.rect.centery += round(self.y)
         self.check_collision(padd1, padd2, score)
+        if self.start:
+            self.reset()
 
 
     def render(self):
