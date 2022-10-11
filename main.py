@@ -1,29 +1,22 @@
 import pygame
-import time, sys
+from menu import Menu
 from game import Game
+from scoreboard import Board
 from settings import *
 
 class Pong:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((SCREEN_W, SCREEN_H), flags=pygame.SCALED)
-        self.clock = pygame.time.Clock()
         pygame.display.set_caption(CAPTION)
 
-        self.game = Game(multiplayer=True, clock=self.clock)
+        self.menu = Menu()
+        self.game = Game(multiplayer=True)
     
-    def handle_events(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
 
     def run(self):
-        while True:
-            self.handle_events()
-            self.game.run()
-            self.clock.tick(FPS)
-            pygame.display.update()
+        self.menu.run()
+        #self.game.run()
 
 
 if __name__ == '__main__':

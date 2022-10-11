@@ -1,4 +1,3 @@
-from calendar import timegm
 import pygame
 import time, sys
 from paddle import Paddle, AiPaddle
@@ -6,11 +5,11 @@ from ball import Ball
 from scoreboard import Board
 from settings import *
 
-class Game:
-    def __init__(self, multiplayer=False, theme=DEFAULT_T, clock=pygame.time.Clock()):
+class Game():
+    def __init__(self, multiplayer=False, theme=DEFAULT_T):
         self.display_surface = pygame.display.get_surface()
         self.display_w, self.display_h = self.display_surface.get_size()
-        self.clock = clock
+        self.clock = pygame.time.Clock()
         self.theme = theme 
 
         self.player_1 = Paddle(size=PADD_SIZE, pos=(0, self.display_h//2), color=self.theme["obj"])
@@ -38,18 +37,27 @@ class Game:
         self.previus_time = time.time()
 
         self.fps = Board(name="ARCADECLASSIC.ttf", size=16)
+        self.running = True
+
 
     def count_play_time(self):
         self.actual_time = self.start_playing - time.perf_counter()
-        print(f'{self.playing_time + self.actual_time:.0f}')
         if self.playing_time + self.actual_time <= 0:
             pygame.quit()
             sys.exit()
+
 
     def get_deltatime(self):
         self.dt = time.time() - self.previus_time
         self.previus_time = time.time()
     
+
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
 
     def update(self, dt):
         self.player_1.update(dt)
@@ -58,10 +66,8 @@ class Game:
 
 
     def render(self):
-
         # clean screen
         self.display_surface.fill(self.theme["bg"])
-        self.fps.render(f'{self.clock.get_fps():.0f}', pos=(20, 10))
 
         # show score
         self.p1_score.render(f'{self.score[0]}', pos=(self.display_w//2 - 25, self.display_h//2))
@@ -83,8 +89,13 @@ class Game:
 
 
     def run(self):
-        self.get_deltatime()
-        self.update(self.dt)
-        self.render()
-        self.count_play_time()
+        while self.running:
+            self.handle_events()
+            self.get_deltatime()
+            self.update(self.dt)
+            self.render()
+            self.count_play_time()
+            self.fps.render(f'{self.clock.get_fps():.0f}', pos=(20, 10))
+            self.clock.tick(FPS)
+            pygame.display.update()
         
