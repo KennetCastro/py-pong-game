@@ -10,7 +10,7 @@ class Pong:
         self.clock = pygame.time.Clock()
         pygame.display.set_caption(CAPTION)
 
-        self.game = Game(multiplayer=True)
+        self.game = Game(multiplayer=True, clock=self.clock)
     
     def handle_events(self):
         for event in pygame.event.get():
