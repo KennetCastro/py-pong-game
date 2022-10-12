@@ -1,3 +1,4 @@
+from re import M
 import pygame
 import time, sys
 from game import Game
@@ -11,7 +12,9 @@ class Menu:
         self.clock = pygame.time.Clock()
         self.theme = theme
 
-        self.title = Board(name="ARCADECLASSIC.ttf", size=100)
+        self.title = Board(name="ARCADECLASSIC.ttf", size=120)
+        self.single_btn = Board(name="ARCADECLASSIC.ttf", size=60)
+        self.multi_btn = Board(name="ARCADECLASSIC.ttf", size=60)
 
         self.previus_time = time.time()
         self.fps = Board(name="ARCADECLASSIC.ttf", size=16)
@@ -30,6 +33,8 @@ class Menu:
 
     def control(self):
         key = pygame.key.get_pressed()
+
+        # change theme
         if key[THEME_CONTROLL["default"]]:
             self.theme = DEFAULT_T
         if key[THEME_CONTROLL["dark"]]:
@@ -40,14 +45,24 @@ class Menu:
             self.theme = WATERMELON_T
         
 
-        if key[pygame.K_m]:
-            self.running = False
-            self.fun(True, self.theme)
-        if key[pygame.K_n]:
-            self.running = False
-            self.fun(False, self.theme)
-        if key[pygame.K_b]:
-            self.theme = DARK_T
+        #if key[pygame.K_m]:
+        #    self.running = False
+        #    self.fun(True, self.theme)
+        #if key[pygame.K_n]:
+        #    self.running = False
+        #    self.fun(False, self.theme)
+
+        # buttons functionality
+        mouse_pos = pygame.mouse.get_pos()
+        mouse = pygame.mouse.get_pressed()
+        if self.single_btn.rect.collidepoint(mouse_pos):
+            if mouse[0] == 1:
+                self.running = False
+                self.fun(False, self.theme)
+        if self.multi_btn.rect.collidepoint(mouse_pos):
+            if mouse[0] == 1:
+                self.running = False
+                self.fun(True, self.theme)
 
 
     def handle_events(self):
@@ -62,8 +77,28 @@ class Menu:
 
 
     def render(self):
+        # clean screen
         self.display_surface.fill(self.theme["bg"])
-        self.title.render('PONG!', (self.display_w//2, self.display_h//8), self.theme["obj"])
+
+        # render title
+        self.title.render('   PONG!', (self.display_w//2, self.display_h//8), self.theme["obj"])
+
+        # render single player button
+        pygame.draw.rect(self.display_surface, self.theme["obj"], self.single_btn.rect, 2, 8)
+        self.single_btn.render(
+            ' PvPC ',
+            (self.display_w//4, self.display_h - self.display_h//3 - 25),
+            self.theme["obj"]
+        )
+
+        # render mutiplayer button
+        pygame.draw.rect(self.display_surface, self.theme["obj"], self.multi_btn.rect, 2, 8)
+        self.multi_btn.render(
+            ' PvP ',
+            (self.display_w - self.display_w//4 , self.display_h - self.display_h//3 - 25),
+            self.theme["obj"]
+        )
+        
 
 
     def run(self):
