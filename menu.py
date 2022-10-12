@@ -15,6 +15,7 @@ class Menu:
         self.title = Board(name="ARCADECLASSIC.ttf", size=120)
         self.single_btn = Board(name="ARCADECLASSIC.ttf", size=60)
         self.multi_btn = Board(name="ARCADECLASSIC.ttf", size=60)
+        self.info = Board(name="ARCADECLASSIC.ttf", size=20)
 
         self.previus_time = time.time()
         self.fps = Board(name="ARCADECLASSIC.ttf", size=16)
@@ -80,8 +81,9 @@ class Menu:
         # clean screen
         self.display_surface.fill(self.theme["bg"])
 
-        # render title
+        # render title and bottom info
         self.title.render('   PONG!', (self.display_w//2, self.display_h//8), self.theme["obj"])
+        self.info.render(f'press a number between 1 to 4 to change color theme', pos=(self.display_w//2, self.display_h - 50), color=self.theme["obj"])
 
         # render single player button
         pygame.draw.rect(self.display_surface, self.theme["obj"], self.single_btn.rect, 2, 8)
