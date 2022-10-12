@@ -26,13 +26,13 @@ class Game():
                 pos=(self.display_w - PADD_SIZE[0], self.display_h//2),
                 color=self.theme["obj"]
             )
-        self.ball = Ball(color=self.theme["obj"])
+        self.ball = Ball(color=self.theme["ball"])
         
         self.score = [0, 0]
         self.p1_score = Board(name="ARCADECLASSIC.ttf")
         self.p2_score = Board(name="ARCADECLASSIC.ttf")
 
-        self.playing_time = 30
+        self.playing_time = 5
         self.previus_time = time.time()
         self.time_board = Board(name="ARCADECLASSIC.ttf", size=40)
 
@@ -43,11 +43,12 @@ class Game():
 
 
     def count_play_time(self):
+        # playing couter
         self.actual_time = self.start_playing - time.perf_counter()
         self.time = self.playing_time + self.actual_time
         if self.time <= 0:
             self.running = False
-            self.fun()
+            self.fun(self.theme)
 
 
     def get_deltatime(self):
@@ -72,11 +73,6 @@ class Game():
         # clean screen
         self.display_surface.fill(self.theme["bg"])
 
-        # show score
-        self.p1_score.render(f'{self.score[0]}', pos=(self.display_w//2 - 30, self.display_h//2))
-        self.p2_score.render(f'{self.score[1]}', pos=(self.display_w//2 + 30, self.display_h//2))
-        self.time_board.render(f'{self.time: .0f}', pos=(self.display_w//2, 5))
-        
         # middle line
         pygame.draw.line(
             self.display_surface,
@@ -85,6 +81,11 @@ class Game():
             (self.display_w//2, self.display_h),
             2
         )
+
+        # show score
+        self.p1_score.render(f'{self.score[0]}', pos=(self.display_w//2 - 30, self.display_h//2), color=self.theme["obj"])
+        self.p2_score.render(f'{self.score[1]}', pos=(self.display_w//2 + 30, self.display_h//2), color=self.theme["obj"])
+        self.time_board.render(f'{self.time: .0f}', pos=(self.display_w//2, 10), color=self.theme["obj"], bgcolor=self.theme["bg"])
 
         # show player and ball
         self.player_1.render()
@@ -100,7 +101,7 @@ class Game():
             self.count_play_time()
             self.update(self.dt)
             self.render()
-            self.fps.render(f'{self.clock.get_fps():.0f}', pos=(20, 10))
+            self.fps.render(f'{self.clock.get_fps():.0f}', pos=(20, 10), color=self.theme["obj"])
             self.clock.tick(FPS)
             pygame.display.update()
         

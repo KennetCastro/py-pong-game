@@ -13,11 +13,11 @@ class Pong:
         self.menu = Menu(fun=self.play)
         self.state = self.menu
 
-    def play(self, multi):
-        self.state = Game(multiplayer=multi, fun=self.stop_play)
+    def play(self, multi, theme):
+        self.state = Game(theme=theme, multiplayer=multi, fun=self.stop_play)
 
-    def stop_play(self):
-        self.state = Menu(fun=self.play)
+    def stop_play(self, theme):
+        self.state = Menu(theme=theme, fun=self.play)
     
 
     def handle_events(self):

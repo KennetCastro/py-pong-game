@@ -30,19 +30,24 @@ class Menu:
 
     def control(self):
         key = pygame.key.get_pressed()
-        if key[FIRST_CONTROLL["up"]]:
-            self.theme["bg"] = (55, 30, 30)
-        elif key[FIRST_CONTROLL["down"]]:
-            self.theme["bg"] = (30, 55, 30)
-        else:
-            self.theme["bg"] = (30, 30, 55)
+        if key[THEME_CONTROLL["default"]]:
+            self.theme = DEFAULT_T
+        if key[THEME_CONTROLL["dark"]]:
+            self.theme = DARK_T
+        if key[THEME_CONTROLL["light"]]:
+            self.theme = LIGHT_T
+        if key[THEME_CONTROLL["watermelon"]]:
+            self.theme = WATERMELON_T
+        
 
         if key[pygame.K_m]:
             self.running = False
-            self.fun(True)
+            self.fun(True, self.theme)
         if key[pygame.K_n]:
             self.running = False
-            self.fun(False)
+            self.fun(False, self.theme)
+        if key[pygame.K_b]:
+            self.theme = DARK_T
 
 
     def handle_events(self):
@@ -58,7 +63,7 @@ class Menu:
 
     def render(self):
         self.display_surface.fill(self.theme["bg"])
-        self.title.render('PONG!', (self.display_w//2, self.display_h//8))
+        self.title.render('PONG!', (self.display_w//2, self.display_h//8), self.theme["obj"])
 
 
     def run(self):
@@ -67,6 +72,6 @@ class Menu:
             self.control()
             self.update()
             self.render()
-            self.fps.render(f'{self.clock.get_fps():.0f}', pos=(20, 10))
+            self.fps.render(f'{self.clock.get_fps():.0f}', pos=(20, 10), color=self.theme["obj"])
             self.clock.tick(FPS)
             pygame.display.update()
