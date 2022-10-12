@@ -7,8 +7,10 @@ from settings import *
 class Pong:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((SCREEN_W, SCREEN_H), flags=pygame.SCALED)
+        self.screen = pygame.display.set_mode((SCREEN_W, SCREEN_H))
+        self.icon = pygame.image.load('pong.ico').convert()
         pygame.display.set_caption(CAPTION)
+        pygame.display.set_icon(self.icon)
 
         self.menu = Menu(fun=self.play)
         self.state = self.menu

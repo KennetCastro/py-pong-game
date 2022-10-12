@@ -12,7 +12,7 @@ class Ball:
         self.color = color
 
         self.rect = pygame.rect.Rect(self.x - self.size//2, self.y - self.size//2, self.size, self.size)
-        self.speed = 600
+        self.speed = 585
         self.direction = pygame.math.Vector2(random.choice([-1, 1]), random.choice([-1, 1]))
         self.start = None
         self.start_time = time.time()
