@@ -44,10 +44,18 @@ class Paddle:
     def render(self):
         pygame.draw.rect(self.display_surface, self.color, self.rect, border_radius=8)
 class AiPaddle(Paddle):
-    def __init__(self, *args, **kargs):
+    def __init__(self,target=None, *args, **kargs):
         super().__init__(*args, **kargs)
+        self.target = target
         self.rect.x = self.display_w - self.width
 
 
     def control(self):
-        pass
+        # p += (target - p) / rate
+        p = (self.target.rect.centery - self.rect.centery)//20
+        if p < -2.45:
+            self.direction = -1
+        elif p > 2.45:
+            self.direction = 1
+        else:
+            self.direction = 0

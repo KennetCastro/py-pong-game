@@ -12,27 +12,28 @@ class Game():
         self.clock = pygame.time.Clock()
         self.theme = theme 
 
-        self.player_1 = Paddle(size=PADD_SIZE, pos=(0, self.display_h//2), color=self.theme["obj"])
+        self.ball = Ball(color=self.theme["ball"])
+        self.player_1 = Paddle(size=PADD_SIZE, pos=(0, self.display_h//2-PADD_SIZE[1]//2), color=self.theme["obj"])
         if multiplayer:
             self.player_2 = Paddle(
                 size=PADD_SIZE,
-                pos=(self.display_w - PADD_SIZE[0], self.display_h//2),
+                pos=(self.display_w - PADD_SIZE[0], self.display_h//2-PADD_SIZE[1]//2),
                 color=self.theme["obj"],
                 controll=SECOND_CONTROLL
             )
         else:
             self.player_2 = AiPaddle(
                 size=PADD_SIZE,
-                pos=(self.display_w - PADD_SIZE[0], self.display_h//2),
-                color=self.theme["obj"]
+                pos=(self.display_w - PADD_SIZE[0], self.display_h//2-PADD_SIZE[1]//2),
+                color=self.theme["obj"],
+                target=self.ball
             )
-        self.ball = Ball(color=self.theme["ball"])
         
         self.score = [0, 0]
         self.p1_score = Board(name="ARCADECLASSIC.ttf")
         self.p2_score = Board(name="ARCADECLASSIC.ttf")
 
-        self.playing_time = 5
+        self.playing_time = 60
         self.previus_time = time.time()
         self.time_board = Board(name="ARCADECLASSIC.ttf", size=40)
 
@@ -85,7 +86,7 @@ class Game():
         # show score
         self.p1_score.render(f'{self.score[0]}', pos=(self.display_w//2 - 30, self.display_h//2), color=self.theme["obj"])
         self.p2_score.render(f'{self.score[1]}', pos=(self.display_w//2 + 30, self.display_h//2), color=self.theme["obj"])
-        self.time_board.render(f'{self.time: .0f}', pos=(self.display_w//2, 10), color=self.theme["obj"], bgcolor=self.theme["bg"])
+        self.time_board.render(f'{self.time: .0f}', pos=(self.display_w//2, 10), color=self.theme["ball"], bgcolor=self.theme["bg"])
 
         # show player and ball
         self.player_1.render()
