@@ -6,7 +6,7 @@ from scoreboard import Board
 from settings import *
 
 class Game():
-    def __init__(self, multiplayer=False, theme=DEFAULT_T):
+    def __init__(self, multiplayer=False, theme=DEFAULT_T, fun=None):
         self.display_surface = pygame.display.get_surface()
         self.display_w, self.display_h = self.display_surface.get_size()
         self.clock = pygame.time.Clock()
@@ -32,18 +32,20 @@ class Game():
         self.p1_score = Board(name="ARCADECLASSIC.ttf")
         self.p2_score = Board(name="ARCADECLASSIC.ttf")
 
-        self.playing_time = 3
+        self.playing_time = 30
         self.previus_time = time.time()
 
         self.fps = Board(name="ARCADECLASSIC.ttf", size=16)
         self.running = True
+
+        self.fun = fun
 
 
     def count_play_time(self):
         self.actual_time = self.start_playing - time.perf_counter()
         if self.playing_time + self.actual_time <= 0:
             self.running = False
-            return 'menu'
+            self.fun()
 
 
     def get_deltatime(self):
@@ -98,6 +100,4 @@ class Game():
             self.fps.render(f'{self.clock.get_fps():.0f}', pos=(20, 10))
             self.clock.tick(FPS)
             pygame.display.update()
-            return 
-        return 
         

@@ -1,10 +1,11 @@
 import pygame
 import time, sys
+from game import Game
 from scoreboard import Board
 from settings import *
 
 class Menu:
-    def __init__(self, theme=DEFAULT_T):
+    def __init__(self, theme=DEFAULT_T, fun=None):
         self.display_surface = pygame.display.get_surface()
         self.display_w, self.display_h = self.display_surface.get_size()
         self.clock = pygame.time.Clock()
@@ -17,6 +18,9 @@ class Menu:
 
         self.next = True
         self.running = True
+
+        self.fun = fun
+
 
 
     def get_deltatime(self):
@@ -35,7 +39,10 @@ class Menu:
 
         if key[pygame.K_m]:
             self.running = False
-            return 'multi'
+            self.fun(True)
+        if key[pygame.K_n]:
+            self.running = False
+            self.fun(False)
 
 
     def handle_events(self):
@@ -63,5 +70,3 @@ class Menu:
             self.fps.render(f'{self.clock.get_fps():.0f}', pos=(20, 10))
             self.clock.tick(FPS)
             pygame.display.update()
-            return 
-        return 'multi'
