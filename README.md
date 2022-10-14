@@ -5,11 +5,11 @@ Pong game clone made entirely in python with pygame.
 ## Feature
 
 * The game can be played mutiplayer and single-player.
-![](menu.png)
+![](repo_img/menu.png)
 
 * Color theme can be change with the keyboard number between 1-4.
-![](color_light.png)
-![](color_dark.png)
+![](repo_img/olor_light.png)
+![](repo_img/color_dark.png)
 
     ### Colors:
     1) Default (Blue and White)
