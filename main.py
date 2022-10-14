@@ -1,14 +1,14 @@
 import pygame
 import sys
-from menu import Menu
-from game import Game
-from scoreboard import Board
-from settings import *
+from states.menu import Menu
+from states.game import Game
+from scripts.scoreboard import Board
+from scripts.settings import *
 class Pong:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((SCREEN_W, SCREEN_H))
-        self.icon = pygame.image.load('pong.ico').convert()
+        self.icon = pygame.image.load('assets/pong.ico').convert()
         pygame.display.set_caption(CAPTION)
         pygame.display.set_icon(self.icon)
 

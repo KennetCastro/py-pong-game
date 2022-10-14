@@ -1,6 +1,6 @@
 import pygame
 import pygame.freetype
-from settings import *
+from scripts.settings import *
 
 class Board:
     def __init__(self, name='freesansbold.ttf', size=32):

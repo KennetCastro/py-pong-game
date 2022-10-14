@@ -1,4 +1,5 @@
 import pygame.locals as pg_l
+
 # general
 SCREEN_W, SCREEN_H = 720, 480
 CAPTION = "Pong!"
@@ -9,9 +10,7 @@ DEFAULT_T = {"bg": (30, 30, 55), "obj": (200, 200, 200), "ball": (200, 200, 200)
 DARK_T = {"bg": (30, 30, 30), "obj": (200, 200, 200), "ball": (200, 200, 200)}
 LIGHT_T = {"bg": (200, 200, 200), "obj": (30, 30, 30), "ball": (30, 30, 30)}
 WATERMELON_T = {"bg": (205, 51, 46), "obj": (117,184,85), "ball": (30, 30, 30)}
-# (219,97,97)(173,56,56) (117,184,85)(21,114,65)
-# (183,36, 27) (150, 216, 0)(38, 85, 0)
-# (235, 81, 76) (135, 190, 155)
+
 
 # controlls
 THEME_CONTROLL = {"default": pg_l.K_1, "dark": pg_l.K_2, "light": pg_l.K_3, "watermelon": pg_l.K_4}

@@ -1,5 +1,5 @@
 import pygame
-from settings import *
+from scripts.settings import *
 class Paddle:
     def __init__(self, size=(50, 80), pos=(0, 0), color=(200, 200, 200), controll=FIRST_CONTROLL):
         self.display_surface = pygame.display.get_surface()

@@ -1,9 +1,8 @@
 from re import M
 import pygame
 import time, sys
-from game import Game
-from scoreboard import Board
-from settings import *
+from scripts.scoreboard import Board
+from scripts.settings import *
 
 class Menu:
     def __init__(self, theme=DEFAULT_T, fun=None):
@@ -12,19 +11,18 @@ class Menu:
         self.clock = pygame.time.Clock()
         self.theme = theme
 
-        self.title = Board(name="ARCADECLASSIC.ttf", size=120)
-        self.single_btn = Board(name="ARCADECLASSIC.ttf", size=60)
-        self.multi_btn = Board(name="ARCADECLASSIC.ttf", size=60)
-        self.info = Board(name="ARCADECLASSIC.ttf", size=20)
+        self.title = Board(name="assets/ARCADECLASSIC.ttf", size=120)
+        self.single_btn = Board(name="assets/ARCADECLASSIC.ttf", size=60)
+        self.multi_btn = Board(name="assets/ARCADECLASSIC.ttf", size=60)
+        self.info = Board(name="assets/ARCADECLASSIC.ttf", size=20)
 
         self.previus_time = time.time()
-        self.fps = Board(name="ARCADECLASSIC.ttf", size=16)
+        self.fps = Board(name="assets/ARCADECLASSIC.ttf", size=16)
 
         self.next = True
         self.running = True
 
         self.fun = fun
-
 
 
     def get_deltatime(self):
@@ -44,14 +42,6 @@ class Menu:
             self.theme = LIGHT_T
         if key[THEME_CONTROLL["watermelon"]]:
             self.theme = WATERMELON_T
-        
-
-        #if key[pygame.K_m]:
-        #    self.running = False
-        #    self.fun(True, self.theme)
-        #if key[pygame.K_n]:
-        #    self.running = False
-        #    self.fun(False, self.theme)
 
         # buttons functionality
         mouse_pos = pygame.mouse.get_pos()

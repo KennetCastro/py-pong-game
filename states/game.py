@@ -1,9 +1,9 @@
 import pygame
 import time, sys
-from paddle import Paddle, AiPaddle
-from ball import Ball
-from scoreboard import Board
-from settings import *
+from scripts.paddle import Paddle, AiPaddle
+from scripts.ball import Ball
+from scripts.scoreboard import Board
+from scripts.settings import *
 
 class Game():
     def __init__(self, multiplayer=False, theme=DEFAULT_T, fun=None):
@@ -30,14 +30,14 @@ class Game():
             )
         
         self.score = [0, 0]
-        self.p1_score = Board(name="ARCADECLASSIC.ttf")
-        self.p2_score = Board(name="ARCADECLASSIC.ttf")
+        self.p1_score = Board(name="assets/ARCADECLASSIC.ttf")
+        self.p2_score = Board(name="assets/ARCADECLASSIC.ttf")
 
         self.playing_time = 60
         self.previus_time = time.time()
-        self.time_board = Board(name="ARCADECLASSIC.ttf", size=40)
+        self.time_board = Board(name="assets/ARCADECLASSIC.ttf", size=40)
 
-        self.fps = Board(name="ARCADECLASSIC.ttf", size=16)
+        self.fps = Board(name="assets/ARCADECLASSIC.ttf", size=16)
         self.running = True
 
         self.fun = fun
