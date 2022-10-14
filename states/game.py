@@ -7,6 +7,8 @@ from scripts.settings import *
 
 class Game():
     def __init__(self, multiplayer=False, theme=DEFAULT_T, fun=None):
+        pygame.mixer.pre_init(44100, -16, 2, 512)
+
         self.display_surface = pygame.display.get_surface()
         self.display_w, self.display_h = self.display_surface.get_size()
         self.clock = pygame.time.Clock()
@@ -33,13 +35,12 @@ class Game():
         self.p1_score = Board(name="assets/ARCADECLASSIC.ttf")
         self.p2_score = Board(name="assets/ARCADECLASSIC.ttf")
 
-        self.playing_time = 60
+        self.playing_time = 63
         self.previus_time = time.time()
         self.time_board = Board(name="assets/ARCADECLASSIC.ttf", size=40)
-
         self.fps = Board(name="assets/ARCADECLASSIC.ttf", size=16)
-        self.running = True
 
+        self.running = True
         self.fun = fun
 
 
@@ -47,6 +48,7 @@ class Game():
         # playing couter
         self.actual_time = self.start_playing - time.perf_counter()
         self.time = self.playing_time + self.actual_time
+        self.display_time = self.time if self.time < self.playing_time - 3 else 60
         if self.time <= 0:
             self.running = False
             self.fun(self.theme)
@@ -86,7 +88,7 @@ class Game():
         # show score
         self.p1_score.render(f'{self.score[0]}', pos=(self.display_w//2 - 30, self.display_h//2), color=self.theme["obj"])
         self.p2_score.render(f'{self.score[1]}', pos=(self.display_w//2 + 30, self.display_h//2), color=self.theme["obj"])
-        self.time_board.render(f'{self.time: .0f}', pos=(self.display_w//2, 10), color=self.theme["ball"], bgcolor=self.theme["bg"])
+        self.time_board.render(f'{self.display_time: .0f}', pos=(self.display_w//2, 10), color=self.theme["ball"], bgcolor=self.theme["bg"])
 
         # show player and ball
         self.player_1.render()

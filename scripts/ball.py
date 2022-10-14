@@ -12,8 +12,14 @@ class Ball:
         self.color = color
 
         self.rect = pygame.rect.Rect(self.x - self.size//2, self.y - self.size//2, self.size, self.size)
-        self.speed = 585
         self.direction = pygame.math.Vector2(random.choice([-1, 1]), random.choice([-1, 1]))
+        self.speed = 585
+
+        self.collision_sound = pygame.mixer.Sound('assets/pong.ogg')
+        self.score_sound = pygame.mixer.Sound('assets/score.ogg')
+        self.collision_sound.set_volume(0.4)
+        self.score_sound.set_volume(0.4)
+
         self.start = None
         self.start_time = time.time()
 
@@ -33,15 +39,19 @@ class Ball:
     def check_collision(self, padd1, padd2, score):
         # collision with the screen borders
         if self.rect.top <= 0:
+            self.collision_sound.play()
             self.direction.y = 1
         elif self.rect.bottom >= self.display_h:
+            self.collision_sound.play()
             self.direction.y = -1
 
         if self.rect.left <= -50:
+            self.score_sound.play()
             self.direction.x = 1
             score[1] += 1
             self.start = time.time()
         elif self.rect.right >= self.display_w + 50:
+            self.score_sound.play()
             self.direction.x = -1
             score[0] += 1
             self.start = time.time()
@@ -49,10 +59,13 @@ class Ball:
         # collision with the left paddle
         if self.rect.colliderect(padd1):
             if abs(self.rect.top - padd1.bottom) < 10 and self.direction.y < 0:
+                self.collision_sound.play()
                 self.direction.y = 1
             elif abs(self.rect.bottom - padd1.top) < 10 and self.direction.y > 0:
+                self.collision_sound.play()
                 self.direction.y = -1
             if abs(self.rect.left - padd1.right) < 10 and self.direction.x < 0:
+                self.collision_sound.play()
                 self.direction.x = 1
 
         # collision with the right paddle
