@@ -8,7 +8,7 @@ Pong game clone made entirely in python with pygame.
 ![](repo_img/menu.png)
 
 * Color theme can be change with the keyboard number between 1-4.
-![](repo_img/olor_light.png)
+![](repo_img/color_light.png)
 ![](repo_img/color_dark.png)
 
     ### Colors:
